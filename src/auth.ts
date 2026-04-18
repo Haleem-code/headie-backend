@@ -4,17 +4,19 @@ import { username } from "better-auth/plugins";
 import mongoose from "mongoose";
 
 export const auth = betterAuth({
-    database: mongodbAdapter(mongoose.connection.db!),
-    emailAndPassword: {
-        enabled: true,
+  database: mongodbAdapter(mongoose.connection.db!),
+  emailAndPassword: {
+    enabled: true,
+  },
+  socialProviders: {
+    google: {
+      clientId: process.env.GOOGLE_CLIENT_ID || "PLACEHOLDER_ID",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "PLACEHOLDER_SECRET",
     },
-    socialProviders: {
-        google: {
-            clientId: process.env.GOOGLE_CLIENT_ID || "PLACEHOLDER_ID",
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET || "PLACEHOLDER_SECRET",
-        }
-    },
-    plugins: [
-        username()
-    ]
+  },
+  trustedOrigins: [
+    "http://localhost:3000",
+    "https://headie-backend.onrender.com",
+  ],
+  plugins: [username()],
 });
