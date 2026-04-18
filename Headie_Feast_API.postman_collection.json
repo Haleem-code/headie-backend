@@ -1,0 +1,380 @@
+{
+  "info": {
+    "name": "Headie Feast API",
+    "description": "Complete API collection for Headie Feast food delivery backend — Users, Restaurants, Riders",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3001/api"
+    },
+    {
+      "key": "userId",
+      "value": "user_001"
+    },
+    {
+      "key": "restaurantId",
+      "value": "restaurant_001"
+    },
+    {
+      "key": "riderId",
+      "value": "rider_001"
+    },
+    {
+      "key": "orderId",
+      "value": "PASTE_ORDER_ID_HERE"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health & Root",
+      "item": [
+        {
+          "name": "Root - API Running",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3001/",
+              "host": ["http://localhost:3001"],
+              "path": [""]
+            }
+          }
+        },
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["health"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "Create User Profile",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["profile"]
+            },
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"user_001\",\n  \"displayName\": \"John Doe\",\n  \"phone\": \"+2348012345678\",\n  \"role\": \"user\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Create Restaurant Profile",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["profile"]
+            },
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"restaurant_001\",\n  \"displayName\": \"Mama's Kitchen\",\n  \"phone\": \"+2348098765432\",\n  \"role\": \"restaurant\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Create Rider Profile",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["profile"]
+            },
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"rider_001\",\n  \"displayName\": \"Fast Eddie\",\n  \"phone\": \"+2348055555555\",\n  \"role\": \"rider\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Profile by UserId",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/profile/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["profile", "{{userId}}"]
+            }
+          }
+        },
+        {
+          "name": "Get User Order History",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/profile/{{userId}}/history",
+              "host": ["{{baseUrl}}"],
+              "path": ["profile", "{{userId}}", "history"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Menu",
+      "item": [
+        {
+          "name": "Add Menu Item (Restaurant)",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/menu",
+              "host": ["{{baseUrl}}"],
+              "path": ["menu"]
+            },
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"restaurantId\": \"restaurant_001\",\n  \"name\": \"Jollof Rice\",\n  \"description\": \"Smoky party jollof with assorted meat\",\n  \"price\": 3500,\n  \"imageUrl\": \"https://example.com/jollof.jpg\",\n  \"category\": \"Mains\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Add Menu Item 2",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/menu",
+              "host": ["{{baseUrl}}"],
+              "path": ["menu"]
+            },
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"restaurantId\": \"restaurant_001\",\n  \"name\": \"Pepper Soup\",\n  \"description\": \"Spicy catfish pepper soup\",\n  \"price\": 2500,\n  \"imageUrl\": \"https://example.com/peppersoup.jpg\",\n  \"category\": \"Starters\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get All Available Menu Items",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/menu",
+              "host": ["{{baseUrl}}"],
+              "path": ["menu"]
+            }
+          }
+        },
+        {
+          "name": "Search Food & Restaurants",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/menu/search?q=jollof",
+              "host": ["{{baseUrl}}"],
+              "path": ["menu", "search"],
+              "query": [{ "key": "q", "value": "jollof" }]
+            }
+          }
+        },
+        {
+          "name": "Get Menu by Restaurant",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/menu/restaurant/{{restaurantId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["menu", "restaurant", "{{restaurantId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Orders - Full Lifecycle",
+      "item": [
+        {
+          "name": "1. User Places Order",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders"]
+            },
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"user_001\",\n  \"restaurantId\": \"restaurant_001\",\n  \"items\": [\n    { \"name\": \"Jollof Rice\", \"qty\": 2, \"price\": 3500 },\n    { \"name\": \"Pepper Soup\", \"qty\": 1, \"price\": 2500 }\n  ],\n  \"total\": 9500,\n  \"deliveryLocation\": {\n    \"lat\": 6.5244,\n    \"lng\": 3.3792,\n    \"address\": \"12 Marina Road, Lagos Island\"\n  }\n}"
+            },
+            "description": "⚡ IMPORTANT: After sending this, copy the _id from the response and paste it into the collection variable 'orderId'"
+          }
+        },
+        {
+          "name": "2. Restaurant Accepts Order",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/orders/{{orderId}}/restaurant/accept",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders", "{{orderId}}", "restaurant", "accept"]
+            }
+          }
+        },
+        {
+          "name": "3. Restaurant Marks Food Ready",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/orders/{{orderId}}/restaurant/ready",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders", "{{orderId}}", "restaurant", "ready"]
+            }
+          }
+        },
+        {
+          "name": "4. Rider Sees Available Orders",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/orders/available",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders", "available"]
+            }
+          }
+        },
+        {
+          "name": "5. Rider Accepts Order",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/orders/{{orderId}}/rider/accept",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders", "{{orderId}}", "rider", "accept"]
+            },
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"riderId\": \"rider_001\"\n}"
+            }
+          }
+        },
+        {
+          "name": "6. Rider Picked Up Food",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/orders/{{orderId}}/rider/picked_up",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders", "{{orderId}}", "rider", "picked_up"]
+            }
+          }
+        },
+        {
+          "name": "7. Rider On The Way",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/orders/{{orderId}}/rider/on_the_way",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders", "{{orderId}}", "rider", "on_the_way"]
+            }
+          }
+        },
+        {
+          "name": "8. Rider Updates Location (GPS Ping)",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/orders/{{orderId}}/location",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders", "{{orderId}}", "location"]
+            },
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lat\": 6.4350,\n  \"lng\": 3.4200\n}"
+            }
+          }
+        },
+        {
+          "name": "9. Rider Arrived",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/orders/{{orderId}}/rider/arrived",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders", "{{orderId}}", "rider", "arrived"]
+            }
+          }
+        },
+        {
+          "name": "10. Order Delivered",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/orders/{{orderId}}/deliver",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders", "{{orderId}}", "deliver"]
+            }
+          }
+        },
+        {
+          "name": "Get Order Details (with Rider Phone)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/orders/{{orderId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders", "{{orderId}}"]
+            },
+            "description": "Returns the order + rider profile (phone number) + restaurant profile"
+          }
+        },
+        {
+          "name": "Get All Orders",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders"]
+            }
+          }
+        },
+        {
+          "name": "Get Orders by User",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/orders/user/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders", "user", "{{userId}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Orders by Restaurant",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/orders/restaurant/{{restaurantId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders", "restaurant", "{{restaurantId}}"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
